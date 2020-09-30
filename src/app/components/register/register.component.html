@@ -1,0 +1,40 @@
+<ScrollView orientation="vertical">
+<ActionBar title="{N} Login Example">
+    <NavigationButton text="Back" ios.position="left"></NavigationButton>
+    <GridLayout backgroundColor="#CCCCCC">
+        <ScrollView>
+            <StackLayout margin="10" verticalAlignment="center">
+                <StackLayout class="form" padding="15" backgroundColor="#FFFFFF">
+                    <StackLayout class="input-field">
+                        <Label text="Email" class="label font-weight-bold m-b-5"></Label>
+                        <TextField keyboardType="email" class="input" autocorrect="false" autocapitalizationType="none" hint="E.g. user@examples.com" [(ngModel)]="input.email" required></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout> <!--
+                    <StackLayout class="input-field">
+                        <Label text="Display name" class="label font-weight-bold m-b-5"></Label>
+                        <TextField class="input" [(ngModel)]="input.name" required></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout> -->
+                    <StackLayout class="input-field">
+                        <Label text="Password" class="label font-weight-bold m-b-5"></Label>
+                        <TextField secure="true" class="input" [(ngModel)]="input.password" required></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                    <StackLayout class="input-field">
+                        <Label text="Enter password again" class="label font-weight-bold m-b-5"></Label>
+                        <TextField secure="true" class="input" [(ngModel)]="input.validPassword" required></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                    <StackLayout class="input-field">
+                        <Label text="Default country" class="label font-weight-bold m-b-5"></Label>
+                        <ListPicker [items]="countries" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                    <Button class="btn btn-primary w-full" text="Signin" (tap)="register()"></Button>
+                    <Label [nsRouterLink]="['/login']" text="Already a member? Login here." class="text-center footnote"></Label>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</ActionBar>
+</ScrollView>

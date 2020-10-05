@@ -2,6 +2,9 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import * as Https from 'nativescript-https';
 import { User } from "../model/user.model";
+import { getString, setString } from "@nativescript/core/application-settings";
+
+const _CURRENT_USER = "_CURRENT_USER";
 
 @Injectable()
 export class UserService {
@@ -22,22 +25,25 @@ export class UserService {
             (error) => console.error(error));
     }
 
-    public async login(user: User): Promise<any> {
+    public login(user: User)/*: Promise<any>*/ {
         let options = this.createRequestHeaders();
         console.log("USER");
         console.log(user);
-        await new Promise<any>((resolve, reject) => {
+ /*       
+        return new Promise<any>((resolve, reject) => {
             console.log("InPROMISE");
             resolve(this.http.post(this.apiUrl + "/user/login", user, {headers: options}));
         });
+*/
 
-        return true;
-
-/*
-        return this.http.post(this.apiUrl + "/user/login", data, {headers: options}).subscribe(
+        return this.http.post(this.apiUrl + "/user/login", user, {headers: options});/*.subscribe(
             (response) => console.log(response),
             (error) => console.error(error)
         ); */
+    }
+
+    public updateLikes(likedMedias: Array<string>) {
+
     }
 
 
@@ -47,4 +53,12 @@ export class UserService {
         });
         return headers;
     }
+
+    private getuser(): string {
+        return getString(_CURRENT_USER);
+      }
+    
+      private setuser(theToken: string) {
+        setString(_CURRENT_USER, theToken);
+      }
 }

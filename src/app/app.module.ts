@@ -7,6 +7,9 @@ import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
+import { HomeComponent } from "./components/home/home.component";
+import { mediaReducer } from "./reducers/media.reducer";
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
     bootstrap: [
@@ -16,14 +19,16 @@ import { RegisterComponent } from "./components/register/register.component";
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptHttpClientModule,
-        NativeScriptFormsModule
+        NativeScriptFormsModule,
+        StoreModule.forRoot({ medias: mediaReducer })
     ],
     declarations: [
         AppComponent,
         ItemsComponent,
         ItemDetailComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        HomeComponent
     ],
     providers: [],
     schemas: [

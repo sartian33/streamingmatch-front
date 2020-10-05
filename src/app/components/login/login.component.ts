@@ -9,7 +9,7 @@ import { Page, TextField } from "@nativescript/core";
 //import { Page } from "ui/page";
 //import { isAndroid, device } from "platform";
 //import * as app from "application";
-
+  
 @Component({
     moduleId: module.id,
     templateUrl: "./login.component.html",
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     public hideIcon = String.fromCharCode(0xf070);
     public showIcon = String.fromCharCode(0xf06e);
     public showHideIcon: any;
-    private showPassword = false;
+    public hidePassword = true;
 
     emailError = "";
     passError = "";
@@ -46,19 +46,6 @@ export class LoginComponent implements OnInit {
         this.page.cssClasses.add("login-page-background");
         this.page.backgroundSpanUnderStatusBar = true;
         this.showHideIcon = this.hideIcon;
-/*
-        if (isAndroid && device.sdkVersion >= '21') {
-            var View = android.view.View;
-            var window = app.android.startActivity.getWindow();
-            window.setStatusBarColor(0x000000);
-
-            var decorView = window.getDecorView();
-            decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        } */
     }
 
     public hasEmailErrors() {
@@ -116,10 +103,7 @@ export class LoginComponent implements OnInit {
 
 
     showHidePassword() {
-        this.showPassword = !this.showPassword;
-        this.showHideIcon = this.showPassword ? this.showIcon : this.hideIcon;
-        let passField: TextField = this.passwordField.nativeElement;
-        passField.secure = !passField.secure;
+        this.hidePassword = !this.hidePassword;
     }
 
     updateErrors(checkPass) {
@@ -152,6 +136,7 @@ export class LoginComponent implements OnInit {
     }
 
     private isValidForm() {
+        console.log("isValidForm");
         let isValid = !!this.emailError || !!this.passError;
         return !isValid;
     }
@@ -159,16 +144,43 @@ export class LoginComponent implements OnInit {
     login() {
         this.updateErrors(true);
 
-        if (this.isValidForm()) {
+ //       if (this.isValidForm()) {
             this.isAuthenticating = true;
-            this.userService.login(this.user).then(() => {
+            var res = this.userService.login(this.user).subscribe((response) => {
+                if (response) {
+                    this.isAuthenticating = false;
+                    this.router.navigate(["/home"], {clearHistory: true});
+                }
+                else {
+                    alert("ERROR");
+                }
+            },
+            (error) => {
+                console.log("ERROR")
+                console.error(error);
+            });
+            /*
+            console.log("RES");
+            console.log(res);
+            if (res) {
+                this.isAuthenticating = false;
+                this.router.navigate(["/home"], {clearHistory: true});
+            }
+            else {
+                console.log("ERROR");
+            } */
+            /*.then((res) => {
+                console.log("RES");
+                console.log(res);
                 this.isAuthenticating = false;
                 this.router.navigate(["/home"], {clearHistory: true});
             }).catch(error => {
                 this.isAuthenticating = false;
                 this.loginError = error.message;
-            });
-        }
+            });*/
+   //     } else {
+   //         console.log("else :(:(:(:(:(");
+   //     }
     }
 
 

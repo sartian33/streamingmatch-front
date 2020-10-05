@@ -5,14 +5,14 @@
             <StackLayout class="form" padding="15" backgroundColor="#FFFFFF">
                 <StackLayout class="input-field">
                     <Label text="Email" class="label font-weight-bold m-b-5"></Label>
-                    <TextField hint="E.g. user@examples.com" keyboardType="email" autocorrect="false" autocapitalizationType="none" class="input" [(ngModel)]="user.email" (focus)="onEmailFocus()" [ngClass]="{'input-field-error': hasEmailErrors()}"></TextField>
+                    <TextField hint="E.g. user@example.com" keyboardType="email" autocorrect="false" autocapitalizationType="none" class="input" [(ngModel)]="user.email" (focus)="onEmailFocus()" [ngClass]="{'input-field-error': hasEmailErrors()}"></TextField>
                     <Label *ngIf="hasEmailErrors()" class="eloha-font-semibold m-t-2 login-field-label color-danger font-size-md" [text]="getEmailError()"></Label>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
                 <StackLayout class="input-field" [ngClass]="{'input-field-error': hasPasswordErrors()}">
                     <Label text="Password" class="label font-weight-bold m-b-5"></Label>
-                    <TextField secure="true" class="input" [(ngModel)]="user.password" hint="Password"></TextField>
-                    <Label col="1" [text]="showHideIcon" class="fa show-hide-icon font-size-lg" (tap)="showHidePassword()" verticalAlignment="middle"></Label>
+                    <TextField [secure]="hidePassword" class="input" [(ngModel)]="user.password" hint="Password"></TextField>
+                    <Label col="1" [text]="showHideIcon" class="far show-hide-icon font-size-lg" (tap)="showHidePassword()" verticalAlignment="middle"></Label>
                     <StackLayout class="hr-light"></StackLayout>
                     <Label *ngIf="hasPasswordErrors()" class="eloha-font-semibold m-t-2 login-field-label color-danger font-size-md" row="2" [text]="getPasswordError()"></Label>
                 </StackLayout>

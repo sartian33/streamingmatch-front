@@ -1,0 +1,10 @@
+<CardView ripple="true" margin="5" class="whiteCard" [nsRouterLink]="['/media', media.id]">
+    <StackLayout>
+        <Label
+            [id]="media.id"
+            [text]="media.title"
+            class="list-group-item"
+        ></Label>
+        <Image [src]="media.img" [alt]="media.title"></Image>
+    </StackLayout>
+</CardView>

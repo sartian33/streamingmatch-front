@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { Media } from "../model/media.model";
 
+    // https://www.telerik.com/blogs/building-an-online-store-using-ngrx-store-and-angular //
 @Injectable(
     // Instead of providers array you can use provideIn
 // Learn more https://angular.io/guide/providers
@@ -17,8 +19,9 @@ export class MediaService {
 
     private medias = new Array<Media>();
 
+    /*
     loadMedias() {
-        console.log("getMEDIAS");
+        console.log("loadMEDIAS");
         let headers = this.createRequestHeaders();
 //        return this.http.get(this.apiUrl + "/media/paginate", {headers: headers});
         this.http.get(this.apiUrl + "/media/paginate", { headers: headers}).subscribe((res: any) => {
@@ -26,18 +29,18 @@ export class MediaService {
             this.medias = res.content;
         });
         console.log(this.medias);
-    }
+    } */
 
-    getMedias() {
-        return this.medias;
+    getMedias(): Observable<Media[]> {
+        console.log("loadMEDIAS");
+        let headers = this.createRequestHeaders();
+        return this.http.get<Media[]>(this.apiUrl + "/media/paginate", {headers: headers});
     }
-
 
     private createRequestHeaders() {
         let headers = new HttpHeaders({
             //"AuthKey":"mykey",
         });
-
         return headers;
     }
 

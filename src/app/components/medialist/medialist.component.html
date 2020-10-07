@@ -1,0 +1,26 @@
+<!--
+
+<ActionBar title="StreamingApp" class="action-bar"> </ActionBar>
+<GridLayout class="page">
+    <ListView [items]="medias" class="list-group">
+      <ng-template let-item="media">
+        <CardView ripple="true" margin="5" class="whiteCard">
+          <Label
+            [id]="media.id"
+            [nsRouterLink]="['/media', media.id]"
+            [text]="media.title"
+            class="list-group-item"
+            (swipe)="onSwipe($event)"
+          ></Label>
+        </CardView>
+      </ng-template>
+    </ListView>
+  </GridLayout>
+
+https://ngrx.io/guide/store
+https://medium.com/@RupaniChirag/simple-angular-app-using-ngrx-8-store-and-effects-factory-methods-f3423b9f6d3b
+https://www.telerik.com/blogs/building-an-online-store-using-ngrx-store-and-angular
+
+-->
+
+<app-media *ngFor="let media of medias" [media]="media" (swipe)="onSwipe($event)"></app-media>

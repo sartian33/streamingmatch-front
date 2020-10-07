@@ -8,8 +8,12 @@ import { ItemDetailComponent } from "./item/item-detail.component";
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { HomeComponent } from "./components/home/home.component";
-import { mediaReducer } from "./reducers/media.reducer";
-import { StoreModule } from '@ngrx/store';
+import { StoreModule } from "@ngrx/store";
+import { MediaReducer } from './store/reducers/media.reducers';
+import { EffectsModule } from "@ngrx/effects";
+import { MediaEffects } from './store/effects/media.effects';
+import { MediaComponent } from './components/media/media.component';
+import { MediaListComponent } from './components/medialist/medialist.component';
 
 @NgModule({
     bootstrap: [
@@ -20,7 +24,9 @@ import { StoreModule } from '@ngrx/store';
         AppRoutingModule,
         NativeScriptHttpClientModule,
         NativeScriptFormsModule,
-        StoreModule.forRoot({ medias: mediaReducer })
+        StoreModule.forRoot({ media: MediaReducer }),
+        EffectsModule.forRoot([MediaEffects])
+  //      StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
     ],
     declarations: [
         AppComponent,
@@ -28,9 +34,11 @@ import { StoreModule } from '@ngrx/store';
         ItemDetailComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent
+        HomeComponent,
+        MediaListComponent,
+        MediaComponent
     ],
-    providers: [],
+    providers: [/*MediaService*/],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

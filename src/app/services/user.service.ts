@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import * as Https from 'nativescript-https';
 import { User } from "../model/user.model";
 import { getString, setString } from "@nativescript/core/application-settings";
+import * as AppSettings from '@nativescript/core/application-settings';
 
 const _CURRENT_USER = "_CURRENT_USER";
 
@@ -29,7 +30,7 @@ export class UserService {
         let options = this.createRequestHeaders();
         console.log("USER");
         console.log(user);
- /*       
+ /*
         return new Promise<any>((resolve, reject) => {
             console.log("InPROMISE");
             resolve(this.http.post(this.apiUrl + "/user/login", user, {headers: options}));
@@ -57,8 +58,8 @@ export class UserService {
     private getuser(): string {
         return getString(_CURRENT_USER);
       }
-    
-      private setuser(theToken: string) {
+
+    private setuser(theToken: string) {
         setString(_CURRENT_USER, theToken);
-      }
+    }
 }

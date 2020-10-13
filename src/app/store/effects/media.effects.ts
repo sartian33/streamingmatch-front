@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { MediaService } from '../../services/media.service';
-import { MediaActionTypes } from '../actions/media.actions';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { LikeMediaSuccess, MediaActionTypes } from '../actions/media.actions';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class MediaEffects {
-    constructor(private actions$: Actions, private mediaService: MediaService) {}
+    constructor(private actions$: Actions<any>, private mediaService: MediaService) {}
 
     @Effect()
     loadMedias$ = this.actions$.pipe(
@@ -19,4 +19,11 @@ export class MediaEffects {
         )
         )
     );
+
+    @Effect()
+    likeMedia$ = this.actions$.pipe(
+        ofType(MediaActionTypes.LikeMedia),
+        switchMap(action => { return this.mediaService.likeMedia(action.payload).pipe(map(payload => new LikeMediaSuccess(payload)))
+        }), catchError((e) => { console.log("ERROR"); console.log(e); console.log("===================="); return EMPTY;}))
+
 }

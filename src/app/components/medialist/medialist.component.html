@@ -23,4 +23,4 @@ https://www.telerik.com/blogs/building-an-online-store-using-ngrx-store-and-angu
 
 -->
 
-<app-media *ngFor="let media of medias" [media]="media" (swipe)="onSwipe($event)"></app-media>
+<app-media *ngFor="let media of medias" [media]="media" (swipe)="onSwipe($event)" [id]="media.id"></app-media>

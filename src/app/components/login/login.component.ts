@@ -6,10 +6,12 @@ import { UserService } from "../../services/user.service";
 import { User } from "../../model/user.model";
 import { UtilityService } from "../../services/utility.service";
 import { Page, TextField } from "@nativescript/core";
+import * as AppSettings from '@nativescript/core/application-settings';
+
 //import { Page } from "ui/page";
 //import { isAndroid, device } from "platform";
 //import * as app from "application";
-  
+
 @Component({
     moduleId: module.id,
     templateUrl: "./login.component.html",
@@ -136,7 +138,6 @@ export class LoginComponent implements OnInit {
     }
 
     private isValidForm() {
-        console.log("isValidForm");
         let isValid = !!this.emailError || !!this.passError;
         return !isValid;
     }
@@ -149,6 +150,7 @@ export class LoginComponent implements OnInit {
             var res = this.userService.login(this.user).subscribe((response) => {
                 if (response) {
                     this.isAuthenticating = false;
+                    AppSettings.setString("userId",this.user.email);
                     this.router.navigate(["/home"], {clearHistory: true});
                 }
                 else {

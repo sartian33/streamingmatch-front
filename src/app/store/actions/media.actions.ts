@@ -4,7 +4,9 @@ import { Media } from '../../model/media.model';
 export enum MediaActionTypes {
     LoadMedias = '[Medias] Load medias',
     LoadSuccess = '[Medias] Load success',
-    GetMedia = '[Medias] Get media'
+    GetMedia = '[Medias] Get media',
+    LikeMedia = '[Medias] Like media',
+    LikeMediaSuccess = '[Medias] Like media success'
 }
 
 export class LoadMedias implements Action {
@@ -23,4 +25,18 @@ export class GetMedia implements Action {
     constructor(public payload: number) {}
 }
 
-export type MediaActions = GetMedias | GetMedia | LoadMedias;
+export class LikeMedia implements Action {
+    readonly type = MediaActionTypes.LikeMedia;
+
+    constructor(public payload: number) {}
+}
+
+export class LikeMediaSuccess implements Action {
+    readonly type = MediaActionTypes.LikeMediaSuccess;
+
+    constructor(public payload: any) {}
+}
+
+
+
+export type MediaActions = GetMedias | GetMedia | LoadMedias | LikeMedia | LikeMediaSuccess;

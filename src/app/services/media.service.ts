@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Media } from "../model/media.model";
+import * as AppSettings from '@nativescript/core/application-settings';
 
     // https://www.telerik.com/blogs/building-an-online-store-using-ngrx-store-and-angular //
 @Injectable(
@@ -47,4 +48,15 @@ export class MediaService {
     getMedia(id: number): Media {
         return this.medias.filter((media) => media.id === id)[0];
     }
+
+    likeMedia(id: string) {
+        let headers = this.createRequestHeaders();
+        let userId = AppSettings.getString("userId");
+        let dto = ({
+            userId: userId,
+            mediaId: id
+        });
+        return this.http.post(this.apiUrl + "/user/like", dto, {headers: headers});
+    }
+
 }

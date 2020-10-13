@@ -5,8 +5,9 @@ import { CardView } from "@nstudio/nativescript-cardview";
 import { UserService } from "../../services/user.service";
 import { Media } from "../../model/media.model";
 import { MediaService } from "../../services/media.service";
-import { Store } from "@ngrx/store";
-
+import { State, Store } from "@ngrx/store";
+import { GetMedias, LikeMedia } from "../../store/actions/media.actions";
+import { take } from 'rxjs/operators';
 
 registerElement('CardView', () => CardView)
 
@@ -17,28 +18,26 @@ registerElement('CardView', () => CardView)
     providers: [MediaService, UserService]
 })
 export class MediaListComponent implements OnInit, OnDestroy {
-    @Input()
+ //   @Input()
     medias: Media[] = [];
 //    likedMedias: Array<string>;
 
-    constructor() { }
+//    constructor() { }
+    constructor(private store: Store<{ media: any; likedMedias: []}>) {
+        store/*.pipe(select('media'))*/.subscribe(data => {
+            this.medias = data.media.medias.content;
+        });
+    }
 
+    ngOnInit() {
+        this.store.dispatch(new GetMedias());
+    }
+/*
     ngOnInit(): void {
         console.log("listOnInit");
         console.log(this.medias);
-        /*
-        this.mediaService.getMedias().subscribe((res: any) => {
-            console.log(res.content);
-            this.medias = res.content;
-        });
-        console.log(this.medias); */
- //       this.mediaService.loadMedias();
- //       this.medias = this.mediaService.getMedias();
- //       console.log(this.medias);
-   //     this.mediaService.getMedias();
-   //     this.likedMedias = new Array<string>();
     }
-
+*/
     ngOnDestroy(): void {
     }
 
@@ -52,20 +51,30 @@ export class MediaListComponent implements OnInit, OnDestroy {
        console.log("Object that triggered the event: " + args.object);
        console.log("View that triggered the event: " + args.view);
        console.log("Event name: " + args.eventName);
-       console.log("Swipe Direction: " + args.direction);
+       console.log("Swipe Direction: " + args.direction); */
        let id = args.object.get("id");
-       console.log(args.object);
-       console.log(id);
+ //      console.log(args.object);
+ //      console.log(id);
        if (args.direction === 1) {
-            this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
-            this.likedMedias.push(id);
-            console.log("Swipe Right");
+           console.log("SWIPE RIGHT");
+           this.store.dispatch(new LikeMedia(id));
+       //     this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
+       //     this.likedMedias.push(id);
+       //     console.log("Swipe Right");
+            console.log()
         }
         else {
-            this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
+     //       this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
             console.log("Swipe Left");
         }
-        console.log(this.medias); */
+//        console.log(this.medias);
+  //      let test$ = this.store.select('media').subscribe(x => { console.log("SUBS"); console.log(x); });
+  //      console.log("TEST$");
+  //      console.log(test$);
+        let state: State<any>;
+        this.store.select('media').pipe(take(1)).subscribe(s => state = s);
+        console.log("STATE");
+    //    console.log(state.);
     }
 
 }

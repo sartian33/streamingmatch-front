@@ -2,7 +2,7 @@ import { MediaActions, MediaActionTypes } from '../actions/media.actions';
 
 export const initialState = {
     medias: [],
-    likedMedias: []
+    likedMedias: [],
 };
 
 export function MediaReducer(state = initialState, action: MediaActions) {
@@ -17,6 +17,11 @@ export function MediaReducer(state = initialState, action: MediaActions) {
                 ...state,
                 selectedMedia: action.payload
             };
+        case MediaActionTypes.LikeMediaSuccess:
+            return {
+                ...state,
+                pl: action.payload
+            }
         default:
             return state;
     }

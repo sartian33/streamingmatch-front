@@ -6,8 +6,9 @@ import { UserService } from "../../services/user.service";
 import { Media } from "../../model/media.model";
 import { MediaService } from "../../services/media.service";
 import { State, Store } from "@ngrx/store";
-import { GetMedias, LikeMedia } from "../../store/actions/media.actions";
+import { GetMedias, LikeMedia, RemoveFromMedias } from "../../store/actions/media.actions";
 import { take } from 'rxjs/operators';
+import { initialState } from '../../store/state/media.state';
 
 registerElement('CardView', () => CardView)
 
@@ -25,7 +26,7 @@ export class MediaListComponent implements OnInit, OnDestroy {
 //    constructor() { }
     constructor(private store: Store<{ media: any; likedMedias: []}>) {
         store/*.pipe(select('media'))*/.subscribe(data => {
-            this.medias = data.media.medias.content;
+            this.medias = data.media.medias;
         });
     }
 
@@ -58,23 +59,29 @@ export class MediaListComponent implements OnInit, OnDestroy {
        if (args.direction === 1) {
            console.log("SWIPE RIGHT");
            this.store.dispatch(new LikeMedia(id));
+
        //     this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
        //     this.likedMedias.push(id);
        //     console.log("Swipe Right");
-            console.log()
         }
         else {
      //       this.medias.splice(this.medias.findIndex(media => media.id === id), 1);
             console.log("Swipe Left");
         }
-//        console.log(this.medias);
-  //      let test$ = this.store.select('media').subscribe(x => { console.log("SUBS"); console.log(x); });
-  //      console.log("TEST$");
-  //      console.log(test$);
-        let state: State<any>;
-        this.store.select('media').pipe(take(1)).subscribe(s => state = s);
+        let tmp;
+           let newMedias;
+           this.store.subscribe(data => {
+            console.log("==================");
+            console.log(data.media.medias);
+            newMedias = data.media.medias.filter(m => m.id !== id);
+            console.log("newMEDIAS");
+            console.log(newMedias);
+            tmp = data.media.likedMedias;
+        });
         console.log("STATE");
-    //    console.log(state.);
+        console.log(newMedias);
+        this.store.dispatch(new RemoveFromMedias(newMedias));
+
     }
 
 }

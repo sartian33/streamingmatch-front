@@ -26,7 +26,6 @@ import { MediaListComponent } from './components/medialist/medialist.component';
         NativeScriptFormsModule,
         StoreModule.forRoot({ media: MediaReducer }),
         EffectsModule.forRoot([MediaEffects])
-  //      StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
     ],
     declarations: [
         AppComponent,

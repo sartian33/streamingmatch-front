@@ -13,7 +13,7 @@ export class MediaEffects {
     loadMedias$ = this.actions$.pipe(
         ofType(MediaActionTypes.LoadMedias),
         mergeMap(() =>
-            this.mediaService.getMedias().pipe(map(medias => { return { type: MediaActionTypes.LoadSuccess, payload: medias};
+            this.mediaService.getMedias().pipe(map(medias => { console.log("MEDIAAAAAAS"); console.log(medias.content); return { type: MediaActionTypes.LoadSuccess, payload: medias.content};
         }),
         catchError(() => EMPTY)
         )

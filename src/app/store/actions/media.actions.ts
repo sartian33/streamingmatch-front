@@ -6,7 +6,8 @@ export enum MediaActionTypes {
     LoadSuccess = '[Medias] Load success',
     GetMedia = '[Medias] Get media',
     LikeMedia = '[Medias] Like media',
-    LikeMediaSuccess = '[Medias] Like media success'
+    LikeMediaSuccess = '[Medias] Like media success',
+    RemoveFromMedias = '[Medias] Remove from medias'
 }
 
 export class LoadMedias implements Action {
@@ -37,6 +38,12 @@ export class LikeMediaSuccess implements Action {
     constructor(public payload: any) {}
 }
 
+export class RemoveFromMedias implements Action {
+    readonly type = MediaActionTypes.RemoveFromMedias;
+
+    constructor(public payload: []) {}
+}
 
 
-export type MediaActions = GetMedias | GetMedia | LoadMedias | LikeMedia | LikeMediaSuccess;
+
+export type MediaActions = GetMedias | GetMedia | LoadMedias | LikeMedia | LikeMediaSuccess | RemoveFromMedias;

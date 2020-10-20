@@ -32,7 +32,7 @@ export class MediaService {
         console.log(this.medias);
     } */
 
-    getMedias(): Observable<Media[]> {
+    getMedias(): Observable<any> {
         console.log("loadMEDIAS");
         let headers = this.createRequestHeaders();
         return this.http.get<Media[]>(this.apiUrl + "/media/paginate", {headers: headers});

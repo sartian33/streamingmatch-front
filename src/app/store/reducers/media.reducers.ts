@@ -1,10 +1,5 @@
 import { MediaActions, MediaActionTypes } from '../actions/media.actions';
-
-export const initialState = {
-    medias: [],
-    likedMedias: [],
-};
-
+import { initialState } from '../state/media.state';
 export function MediaReducer(state = initialState, action: MediaActions) {
     switch (action.type) {
         case MediaActionTypes.LoadSuccess:
@@ -21,7 +16,12 @@ export function MediaReducer(state = initialState, action: MediaActions) {
             return {
                 ...state,
                 pl: action.payload
-            }
+            };
+        case MediaActionTypes.RemoveFromMedias:
+            return {
+                ...state,
+                medias: action.payload
+            };
         default:
             return state;
     }
